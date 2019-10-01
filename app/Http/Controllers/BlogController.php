@@ -61,7 +61,9 @@ class BlogController extends Controller
       $blog->description = $request->description;
       $blog->save();
 
-      event(new BlogCreated($blog));
+      // event(new BlogCreated($blog));
+      // send email with parameter
+      Mail::to('testing1@gmail.com')->queue(new BlogPosted($blog));
 
       return redirect('blog');
     }
