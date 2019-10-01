@@ -13,6 +13,8 @@ use App\Blog;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BlogPosted;
 
+use App\Event\BlogCreated;
+
 class BlogController extends Controller
 {
     public function index(){
@@ -59,8 +61,7 @@ class BlogController extends Controller
       $blog->description = $request->description;
       $blog->save();
 
-      // send email with parameter
-      Mail::to('testing1@gmail.com')->send(new BlogPosted($blog));
+      event(new BlogCreated($blog));
 
       return redirect('blog');
     }

@@ -5,6 +5,8 @@ namespace App\Listeners;
 use App\Event\BlogCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\BlogPosted;
 
 class SendUserEmail
 {
@@ -26,6 +28,7 @@ class SendUserEmail
      */
     public function handle(BlogCreated $event)
     {
-        //
+      // send email with parameter
+      Mail::to('testing1@gmail.com')->send(new BlogPosted($event->blog));
     }
 }
