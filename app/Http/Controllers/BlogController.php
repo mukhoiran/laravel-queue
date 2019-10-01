@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Blog;
 
+// load mail
+// load database
+use Illuminate\Support\Facades\Mail;
+use App\Mail\BlogPosted;
+
 class BlogController extends Controller
 {
     public function index(){
@@ -53,6 +58,9 @@ class BlogController extends Controller
       $blog->title = $request->title;
       $blog->description = $request->description;
       $blog->save();
+
+      // send email with parameter
+      Mail::to('testing1@gmail.com')->send(new BlogPosted($blog));
 
       return redirect('blog');
     }
